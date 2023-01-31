@@ -1,5 +1,6 @@
 import axios from "axios";
-import { maggie, serviceUrl } from "../fixtures.js";
+
+import { serviceUrl } from "../fixtures.js";
 
 export const playtimeService = {
   playtimeUrl: serviceUrl,
@@ -15,12 +16,8 @@ export const playtimeService = {
   },
 
   async getAllUsers() {
-    try {
-      const res = await axios.get(`${this.playtimeUrl}/api/users`);
-      return res.data;
-    } catch (e) {
-      return null;
-    }
+    const res = await axios.get(`${this.playtimeUrl}/api/users`);
+    return res.data;
   },
 
   async deleteAllUsers() {
@@ -76,15 +73,5 @@ export const playtimeService = {
   async deleteTrack(id) {
     const res = await axios.delete(`${this.playtimeUrl}/api/tracks/${id}`);
     return res.data;
-  },
-
-  async authenticate(user) {
-    const response = await axios.post(`${this.playtimeUrl}/api/users/authenticate`, user);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-    return response.data;
-  },
-
-  async clearAuth() {
-    axios.defaults.headers.common["Authorization"] = "";
   },
 };
